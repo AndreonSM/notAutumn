@@ -18,31 +18,30 @@ import com.example.firstproject.repositories.UserRepository;
 @RestController
 
 // Setting the pathway the endpoints shall answer
-@RequestMapping(value = "/users")
+@RequestMapping("/users")
 public class UserController {
-	
-	// Dependency injection mechanism (so we don't have to instance the object) 
+
+	// Dependency injection mechanism (so we don't have to instance the object)
 	@Autowired
 	private UserRepository repository;
 
-	
 	@GetMapping
-	public List<User> findAllPpl(){
+	public List<User> findAllPpl() {
 		List<User> listPpl = repository.findAll();
 		return listPpl;
-		}
-	
-	@GetMapping(value = "/{id}")
-	public User findUserById(@PathVariable Long id){
+	}
+
+	@GetMapping("/{id}")
+	public User findUserById(@PathVariable Long id) {
 		User myTarget = repository.findById(id).get();
 		return myTarget;
-		}
-	
+	}
+
 	// Use JSON
 	@PostMapping
-	public User addUser(@RequestBody User user){
+	public User addUser(@RequestBody User user) {
 		User inserted = repository.save(user);
 		return inserted;
-		}
-	
+	}
+
 }
