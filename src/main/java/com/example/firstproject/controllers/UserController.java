@@ -41,8 +41,6 @@ public class UserController {
 		}
 	
 	// Use JSON
-	// ? Solution to Issue 3: Ignore the POST request if null data is being sent through it
-	// and return "BAD_REQUEST" ?
 	@PostMapping
 	public ResponseEntity<User> addUser(@RequestBody User user){
 		if (user.getName() == null || user.getEmail() == null) 
@@ -50,11 +48,5 @@ public class UserController {
 		User inserted = repository.save(user);
 		return new ResponseEntity<>(inserted, HttpStatus.CREATED);
 		}
-	/*@PostMapping
-	public User addUser(@RequestBody User user){
-		
-		User inserted = repository.save(user);
-		return inserted;
-		}
-	*/
+	
 }
