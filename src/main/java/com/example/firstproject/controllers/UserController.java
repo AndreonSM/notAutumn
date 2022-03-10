@@ -5,6 +5,8 @@ package com.example.firstproject.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,10 +41,20 @@ public class UserController {
 		}
 	
 	// Use JSON
+	// ? Solution to Issue 3: Ignore the POST request if null data is being sent through it
+	// and return "BAD_REQUEST" ?
 	@PostMapping
+	public ResponseEntity<User> addUser(@RequestBody User user){
+		if (user.getName() == null || user.getEmail() == null) 
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		User inserted = repository.save(user);
+		return new ResponseEntity<>(inserted, HttpStatus.CREATED);
+		}
+	/*@PostMapping
 	public User addUser(@RequestBody User user){
+		
 		User inserted = repository.save(user);
 		return inserted;
 		}
-	
+	*/
 }
